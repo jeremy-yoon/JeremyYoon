@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'blog',
     'rest_framework',
+    'django_summernote',
 ]
 
 MIDDLEWARE = [
