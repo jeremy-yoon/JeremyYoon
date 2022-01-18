@@ -1,13 +1,14 @@
+from re import I
 from django.core.paginator import Paginator
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, get_list_or_404, redirect
 from django.utils import timezone
 
 from rest_framework import serializers
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework.serializers import Serializer
-from .models import Post
-from .serializers import PostSerializer
+from .models import Post, Comment
+from .serializers import PostSerializer, CommentSerializer
 import random
 
 @api_view(['GET'])
@@ -20,10 +21,41 @@ def index(request):
     return Response(serializer.data)
 
 @api_view(['GET'])
-def post(request, id):
-	post = get_object_or_404(Post, pk=id)
+def post(request, post_pk):
+	post = get_object_or_404(Post, pk=post_pk)
 	serializer = PostSerializer(post)
 	return Response(serializer.data)
+
+@api_view(['GET'])
+def comment_list(request) :
+    comments = get_list_or_404(Comment)
+    serializer = CommentSerializer(comments, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def comment_detail(request, comment_pk):
+    comments = get_list_or_404(Comment, pk=comment_pk)
+    serializer = CommentSerializer(comments)
+    return Response(serializer.data)
+
+@api_view(['POST', 'GET'])
+def comment_create(request, post_pk):
+    request_method = request.method
+
+    if request_method == 'POST':
+
+        post = get_object_or_404(Post, pk=post_pk)
+        serializer = CommentSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save(post=post)
+
+    else:
+        post = get_object_or_404(Post, pk=post_pk)
+        queryset = Comment.objects.filter(post=post)
+        serializer = CommentSerializer(queryset, many=True)
+    
+    return Response(serializer.data)
+    
 
 # @api_view(['POST'])
 # def comment_create(request, post_id):
