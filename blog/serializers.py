@@ -1,5 +1,11 @@
 from rest_framework import serializers
-from .models import Post, Comment
+from .models import Category, Post, Comment
+
+class CategorySerializer(serializers.ModelSerializer):
+	class Meta:
+		model = Category
+		# exclude = ('body', )
+		fields = '__all__'
 
 class PostSerializer(serializers.ModelSerializer):
 	class Meta:
