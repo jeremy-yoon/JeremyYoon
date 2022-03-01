@@ -14,6 +14,8 @@ class Post(models.Model):
 	represent_image = models.ImageField(
         upload_to="post/%Y/%m/%d", null=True, blank=True)
 	update_date = models.DateTimeField(null=True, blank=True)
+	view_count = models.IntegerField(default=0, verbose_name='조회수')
+	like_count = models.IntegerField(default=0, verbose_name='좋아요')
 	
 class Comment(models.Model):
 	post = models.ForeignKey(Post, on_delete=models.CASCADE)
@@ -21,4 +23,5 @@ class Comment(models.Model):
 	content = models.TextField()
 	create_date = models.DateTimeField(auto_now_add=True)
 	update_date = models.DateTimeField(null=True, blank=True)
+	like_count = models.IntegerField(default=0, verbose_name='좋아요')
 	

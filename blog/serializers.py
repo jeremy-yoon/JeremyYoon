@@ -8,14 +8,14 @@ class CategorySerializer(serializers.ModelSerializer):
 		fields = '__all__'
 
 class PostSerializer(serializers.ModelSerializer):
-	reply_count = serializers.SerializerMethodField()
+	comment_count = serializers.SerializerMethodField()
 	
 	class Meta:
 		model = Post
 		# exclude = ('body', )
 		fields = '__all__'
 
-	def get_reply_count(self, obj):
+	def get_comment_count(self, obj):
         	return Comment.objects.filter(post=obj).count()
 
 class CommentSerializer(serializers.ModelSerializer):
