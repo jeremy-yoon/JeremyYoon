@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-xkx(g$-f_95srg=th!8ge_amo4y3bg%mm7mz-0+b!%dgj)d4ia
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+
 
 
 # Application definition
@@ -58,8 +58,10 @@ MIDDLEWARE = [
 ]
 
 # CORS 관련 추가
-CORS_ORIGIN_WHITELIST = ['http://127.0.0.1:3000', 'http://localhost:3000']
+CORS_ORIGIN_WHITELIST = ['http://127.0.0.1:3000', 'http://localhost:3000', 'https://jeremy-yoon.com/']
 CORS_ALLOW_CREDENTIALS = True
+
+ALLOWED_HOSTS = ['*']
 
 ROOT_URLCONF = 'jeremyapi.urls'
 
